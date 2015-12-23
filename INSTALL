@@ -1,0 +1,9 @@
+Building DustCoin
+
+See doc/readme-qt.rst for instructions on building DustCoin QT,
+the intended-for-end-users, nice-graphical-interface, reference
+implementation of DustCoin.
+
+See doc/build-*.txt for instructions on building dustcoind,
+the intended-for-services, no-graphical-interface, reference
+implementation of DustCoin.
