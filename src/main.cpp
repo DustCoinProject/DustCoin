@@ -976,19 +976,25 @@ const int DAILY_BLOCKCOUNT =  2880;
 int64_t GetProofOfStakeReward(int64_t nCoinAge, int64_t nFees)
 {
     int64_t nRewardCoinYear = 10 * COIN;
-	
-	if (pindexBest->nHeight >= FORK_HEIGHT)
-	{
-		nRewardCoinYear = nRewardCoinYear * 100;
 		
-		if (pindexBest->nHeight <= FORK_HEIGHT+3200)
-		{
-			nRewardCoinYear = nRewardCoinYear * 10;
-		}
+    int64_t nSubsidy = 0;
+
+	if (pindexBest->nHeight < FORK_HEIGHT)
+	{
+		nSubsidy = nCoinAge * nRewardCoinYear / 365 / COIN;
 	}
 	
-    int64_t nSubsidy = nCoinAge * nRewardCoinYear / 365 / COIN;
-
+	if (pindexBest->nHeight > FORK_HEIGHT)
+	{
+		nSubsidy = (nCoinAge * nRewardCoinYear / 365 / COIN) * 1000;
+	}	
+	
+	if (pindexBest->nHeight > FORK_HEIGHT+3200)
+	{
+		nSubsidy = (nCoinAge * nRewardCoinYear / 365 / COIN) * 100;
+	}		
+	
+	
     if (fDebug && GetBoolArg("-printcreation"))
         printf("GetProofOfStakeReward(): create=%s nCoinAge=%"PRId64"\n", FormatMoney(nSubsidy).c_str(), nCoinAge);
 
