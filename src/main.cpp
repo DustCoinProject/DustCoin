@@ -989,7 +989,7 @@ int64_t GetProofOfStakeReward(int64_t nCoinAge, int64_t nFees)
 		nSubsidy = (nCoinAge * nRewardCoinYear / 365 / COIN) * 1000;
 	}	
 	
-	if (pindexBest->nHeight > FORK_HEIGHT+3200)
+	if (pindexBest->nHeight > FORK_HEIGHT+6400)
 	{
 		nSubsidy = (nCoinAge * nRewardCoinYear / 365 / COIN) * 100;
 	}		
