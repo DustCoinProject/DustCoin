@@ -35,6 +35,7 @@ static const unsigned int MAX_INV_SZ = 500000;
 static const int64_t MAX_MONEY = 10000000000 * COIN;
 
 static const int64_t FORK_HEIGHT = 23200;
+static const int FORK_HEIGHT1 = 25000;
 
 inline bool MoneyRange(int64_t nValue) { return (nValue >= 0 && nValue <= MAX_MONEY); }
 inline int64_t GetTxFee() { return 0; }

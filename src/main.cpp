@@ -989,6 +989,16 @@ int64_t GetProofOfStakeReward(int64_t nCoinAge, int64_t nFees)
 	
     int64_t nSubsidy = nCoinAge * nRewardCoinYear / 365 / COIN;
 
+	if (pindexBest->nHeight >= FORK_HEIGHT1 && pindexBest->nHeight < (FORK_HEIGHT1+6400))
+	{
+		return (nSubsidy * 1000) + nFees;
+	}
+	
+	if (pindexBest->nHeight >= FORK_HEIGHT1)
+	{
+		return (nSubsidy * 100) + nFees;
+	}
+	
     if (fDebug && GetBoolArg("-printcreation"))
         printf("GetProofOfStakeReward(): create=%s nCoinAge=%"PRId64"\n", FormatMoney(nSubsidy).c_str(), nCoinAge);
 
@@ -2839,7 +2849,14 @@ bool static ProcessMessage(CNode* pfrom, string strCommand, CDataStream& vRecv)
             printf("partner %s using obsolete version %i; disconnecting\n", pfrom->addr.ToString().c_str(), pfrom->nVersion);
             pfrom->fDisconnect = true;
             return false;
-        }		
+        }	
+
+		if (pindexBest->nHeight >= FORK_HEIGHT1 && pfrom->nVersion < 60015)
+        {
+            printf("partner %s using obsolete version %i; disconnecting\n", pfrom->addr.ToString().c_str(), pfrom->nVersion);
+            pfrom->fDisconnect = true;
+            return false;
+        }
 
         if (pfrom->nVersion == 10300)
             pfrom->nVersion = 300;
